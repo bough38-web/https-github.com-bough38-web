@@ -5,7 +5,9 @@ import { useState, useRef, useEffect } from 'react';
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ x: -1, y: 20 }); // -1 for initial right-aligned
+  const [buttonPosition, setButtonPosition] = useState({ x: -1, y: 80 }); // Top 80, Right 30 to not cover theme buttons
   const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, initialX: 0, initialY: 0 });
+  const buttonDragRef = useRef({ isDragging: false, startX: 0, startY: 0, initialX: 0, initialY: 0, hasMoved: false });
   const [messages, setMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -13,16 +15,32 @@ export default function AIChatbot() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!dragRef.current.isDragging) return;
-      const dx = e.clientX - dragRef.current.startX;
-      const dy = e.clientY - dragRef.current.startY;
-      setPosition({
-        x: dragRef.current.initialX + dx,
-        y: dragRef.current.initialY + dy
-      });
+      // Chat Window Drag
+      if (dragRef.current.isDragging) {
+        const dx = e.clientX - dragRef.current.startX;
+        const dy = e.clientY - dragRef.current.startY;
+        setPosition({
+          x: dragRef.current.initialX + dx,
+          y: dragRef.current.initialY + dy
+        });
+      }
+      
+      // Button Drag
+      if (buttonDragRef.current.isDragging) {
+        const dx = e.clientX - buttonDragRef.current.startX;
+        const dy = e.clientY - buttonDragRef.current.startY;
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+          buttonDragRef.current.hasMoved = true;
+        }
+        setButtonPosition({
+          x: buttonDragRef.current.initialX + dx,
+          y: buttonDragRef.current.initialY + dy
+        });
+      }
     };
     const handleMouseUp = () => {
       dragRef.current.isDragging = false;
+      buttonDragRef.current.isDragging = false;
     };
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
@@ -91,17 +109,35 @@ export default function AIChatbot() {
     };
   };
 
+  const handleButtonMouseDown = (e: React.MouseEvent) => {
+    buttonDragRef.current = {
+      isDragging: true,
+      startX: e.clientX,
+      startY: e.clientY,
+      initialX: buttonPosition.x === -1 ? window.innerWidth - 90 : buttonPosition.x,
+      initialY: buttonPosition.y,
+      hasMoved: false
+    };
+  };
+
   return (
     <>
       <button 
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          if (!buttonDragRef.current.hasMoved) setIsOpen(true);
+        }}
+        onMouseDown={handleButtonMouseDown}
         style={{
-          position: 'fixed', top: 20, right: 30, width: 60, height: 60,
+          position: 'fixed', 
+          top: buttonPosition.y, 
+          left: buttonPosition.x !== -1 ? buttonPosition.x : undefined,
+          right: buttonPosition.x === -1 ? 30 : undefined,
+          width: 60, height: 60,
           borderRadius: '50%', background: '#2563eb', color: '#fff',
           border: 'none', boxShadow: '0 4px 15px rgba(37, 99, 235, 0.4)',
-          fontSize: '28px', cursor: 'pointer', zIndex: 1000,
+          fontSize: '28px', cursor: 'grab', zIndex: 1000,
           display: isOpen ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+          transition: buttonDragRef.current.isDragging ? 'none' : 'transform 0.2s ease, box-shadow 0.2s ease'
         }}
         onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(37, 99, 235, 0.6)'; }}
         onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.4)'; }}
