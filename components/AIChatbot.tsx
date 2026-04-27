@@ -75,12 +75,13 @@ export default function AIChatbot() {
 
       {isOpen && (
         <div style={{
-          position: 'fixed', bottom: 100, right: 30, width: '350px', height: '500px',
-          background: 'var(--color-surface)', border: '1px solid var(--color-border)',
+          position: 'fixed', top: 20, right: 30, width: '350px', height: '600px',
+          background: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(10px)', 
+          border: '1px solid rgba(255, 255, 255, 0.1)',
           borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
           display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 10000
         }}>
-          <div style={{ background: '#0f172a', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ background: 'rgba(15, 23, 42, 0.95)', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
             <h3 style={{ margin: 0, fontSize: '1.1rem' }}>🤖 AI 리텐션 코치</h3>
             <button onClick={() => setIsOpen(false)} style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>✕</button>
           </div>
