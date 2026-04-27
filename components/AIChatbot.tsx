@@ -96,12 +96,15 @@ export default function AIChatbot() {
       <button 
         onClick={() => setIsOpen(true)}
         style={{
-          position: 'fixed', bottom: 30, right: 30, width: 60, height: 60,
+          position: 'fixed', top: 20, right: 30, width: 60, height: 60,
           borderRadius: '50%', background: '#2563eb', color: '#fff',
-          border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-          fontSize: '24px', cursor: 'pointer', zIndex: 1000,
-          display: isOpen ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center'
+          border: 'none', boxShadow: '0 4px 15px rgba(37, 99, 235, 0.4)',
+          fontSize: '28px', cursor: 'pointer', zIndex: 1000,
+          display: isOpen ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease'
         }}
+        onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(37, 99, 235, 0.6)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.4)'; }}
       >
         💬
       </button>
