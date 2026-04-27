@@ -31,7 +31,7 @@ export default function AIChatbot() {
       if (buttonDragRef.current.isDragging) {
         const dx = e.clientX - buttonDragRef.current.startX;
         const dy = e.clientY - buttonDragRef.current.startY;
-        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
           buttonDragRef.current.hasMoved = true;
         }
         setButtonPosition({
@@ -42,6 +42,7 @@ export default function AIChatbot() {
     };
     const handleMouseUp = () => {
       dragRef.current.isDragging = false;
+      // We don't reset hasMoved here so onClick can read it.
       buttonDragRef.current.isDragging = false;
     };
     window.addEventListener('mousemove', handleMouseMove);
@@ -128,19 +129,17 @@ export default function AIChatbot() {
     setButtonPosition({ x: rect.left, y: rect.top });
   };
 
-  const handleButtonMouseUp = (e: React.MouseEvent) => {
-    if (!buttonDragRef.current.hasMoved) {
-      setIsOpen(true);
-    }
-  };
-
   return (
     <>
       <button 
         ref={buttonRef}
         onMouseDown={handleButtonMouseDown}
-        onMouseUp={handleButtonMouseUp}
-        onClick={(e) => e.preventDefault()}
+        onClick={(e) => {
+          e.preventDefault();
+          if (!buttonDragRef.current.hasMoved) {
+            setIsOpen(true);
+          }
+        }}
         style={{
           position: 'fixed', 
           top: buttonPosition.y !== -1 ? buttonPosition.y : undefined, 
