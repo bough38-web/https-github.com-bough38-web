@@ -3,11 +3,34 @@
 import { useState, useRef, useEffect } from 'react';
 
 export default function AIChatbot() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ x: -1, y: 20 }); // -1 for initial right-aligned
+  const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, initialX: 0, initialY: 0 });
   const [messages, setMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!dragRef.current.isDragging) return;
+      const dx = e.clientX - dragRef.current.startX;
+      const dy = e.clientY - dragRef.current.startY;
+      setPosition({
+        x: dragRef.current.initialX + dx,
+        y: dragRef.current.initialY + dy
+      });
+    };
+    const handleMouseUp = () => {
+      dragRef.current.isDragging = false;
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
@@ -58,6 +81,16 @@ export default function AIChatbot() {
     setIsLoading(false);
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    dragRef.current = {
+      isDragging: true,
+      startX: e.clientX,
+      startY: e.clientY,
+      initialX: position.x === -1 ? window.innerWidth - 380 : position.x,
+      initialY: position.y
+    };
+  };
+
   return (
     <>
       <button 
@@ -75,14 +108,21 @@ export default function AIChatbot() {
 
       {isOpen && (
         <div style={{
-          position: 'fixed', top: 20, right: 30, width: '350px', height: '600px',
+          position: 'fixed', 
+          top: position.y, 
+          left: position.x !== -1 ? position.x : undefined,
+          right: position.x === -1 ? 30 : undefined,
+          width: '350px', height: '600px',
           background: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(10px)', 
           border: '1px solid rgba(255, 255, 255, 0.1)',
           borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
           display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 10000
         }}>
-          <div style={{ background: 'rgba(15, 23, 42, 0.95)', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-            <h3 style={{ margin: 0, fontSize: '1.1rem' }}>🤖 AI 리텐션 코치</h3>
+          <div 
+            onMouseDown={handleMouseDown}
+            style={{ background: 'rgba(15, 23, 42, 0.95)', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)', cursor: 'grab' }}
+          >
+            <h3 style={{ margin: 0, fontSize: '1.1rem', pointerEvents: 'none' }}>🤖 AI 리텐션 코치</h3>
             <button onClick={() => setIsOpen(false)} style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>✕</button>
           </div>
           
