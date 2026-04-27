@@ -31,9 +31,15 @@ export default function AIChatbot() {
       if (buttonDragRef.current.isDragging) {
         const dx = e.clientX - buttonDragRef.current.startX;
         const dy = e.clientY - buttonDragRef.current.startY;
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-          buttonDragRef.current.hasMoved = true;
+        
+        if (!buttonDragRef.current.hasMoved) {
+          if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+            buttonDragRef.current.hasMoved = true;
+          } else {
+            return; // Ignore micro movements to preserve click
+          }
         }
+        
         setButtonPosition({
           x: buttonDragRef.current.initialX + dx,
           y: buttonDragRef.current.initialY + dy
@@ -42,7 +48,6 @@ export default function AIChatbot() {
     };
     const handleMouseUp = () => {
       dragRef.current.isDragging = false;
-      // We don't reset hasMoved here so onClick can read it.
       buttonDragRef.current.isDragging = false;
     };
     window.addEventListener('mousemove', handleMouseMove);
@@ -95,7 +100,7 @@ export default function AIChatbot() {
     } catch (error: any) {
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: `🚨 챗봇 오류 발생 🚨\n\n[상세 내용]: ${error.message}\n\n👉 해결 가이드:\n1. 로컬 환경: .env.local 파일에 키가 올바른지 확인하고 터미널에서 npm run dev 재시작\n2. Vercel 환경: 대시보드 Settings > Environment Variables에 OPENAI_API_KEY 등록 확인 및 재배포\n3. 공통: OpenAI 사이트에서 카드가 정상 등록되어 과금 가능한 상태인지(결제 정보) 확인하세요.` 
+        content: `🚨 챗봇 오류 발생 🚨\n\n[상세 내용]: ${error.message}\n\n👉 해결 가이드:\n1. 로컬 환경: .env.local 파일에 키가 올바른지 확인하고 터미널에서 npm 일시 재시작\n2. Vercel 환경: 대시보드 Settings > Environment Variables에 OPENAI_API_KEY 등록 확인 및 재배포\n3. 공통: OpenAI 사이트에서 카드가 정상 등록되어 과금 가능한 상태인지(결제 정보) 확인하세요.` 
       }]);
     }
     
@@ -112,7 +117,6 @@ export default function AIChatbot() {
       initialX: rect.left,
       initialY: rect.top
     };
-    setPosition({ x: rect.left, y: rect.top });
   };
 
   const handleButtonMouseDown = (e: React.MouseEvent) => {
@@ -126,7 +130,6 @@ export default function AIChatbot() {
       initialY: rect.top,
       hasMoved: false
     };
-    setButtonPosition({ x: rect.left, y: rect.top });
   };
 
   return (
@@ -142,8 +145,8 @@ export default function AIChatbot() {
         }}
         style={{
           position: 'fixed', 
-          top: buttonPosition.y !== -1 ? buttonPosition.y : undefined, 
-          bottom: buttonPosition.y === -1 ? 120 : undefined,
+          top: buttonPosition.y !== -1 ? buttonPosition.y : 150, 
+          bottom: undefined,
           left: buttonPosition.x !== -1 ? buttonPosition.x : undefined,
           right: buttonPosition.x === -1 ? 30 : undefined,
           width: 60, height: 60,
@@ -164,8 +167,8 @@ export default function AIChatbot() {
           ref={chatWindowRef}
           style={{
             position: 'fixed', 
-            top: position.y !== -1 ? position.y : undefined, 
-            bottom: position.y === -1 ? 100 : undefined,
+            top: position.y !== -1 ? position.y : 150, 
+            bottom: undefined,
             left: position.x !== -1 ? position.x : undefined,
             right: position.x === -1 ? 30 : undefined,
             width: '350px', height: '600px',
