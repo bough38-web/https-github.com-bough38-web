@@ -35,7 +35,6 @@ export default function AIChatbot() {
     setIsLoading(true);
 
     try {
-      // 1. Try to call the real AI route (we'll create this next)
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -46,18 +45,14 @@ export default function AIChatbot() {
         const data = await res.json();
         setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
       } else {
-        throw new Error('API failed');
+        const errorData = await res.json().catch(() => ({ error: 'API 서버 통신 오류' }));
+        throw new Error(errorData.error || `HTTP ${res.status} Error`);
       }
-    } catch (error) {
-      // 2. Fallback if API fails or no key
-      setTimeout(() => {
-        setMessages(prev => [...prev, { 
-          role: 'assistant', 
-          content: '죄송합니다. 현재 AI 서버와 연결할 수 없습니다. (API Key 확인 필요)\n임시 답변: 고객의 불만사항에 대해 우선 공감하시고, [경제적 사정]이 이유라면 30만원 미만 구간의 "할인율 30%" 제안을 검토해 보세요.' 
-        }]);
-        setIsLoading(false);
-      }, 1000);
-      return;
+    } catch (error: any) {
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: `🚨 챗봇 오류 발생 🚨\n\n[상세 내용]: ${error.message}\n\n👉 해결 가이드:\n1. 로컬 환경: .env.local 파일에 키가 올바른지 확인하고 터미널에서 npm run dev 재시작\n2. Vercel 환경: 대시보드 Settings > Environment Variables에 OPENAI_API_KEY 등록 확인 및 재배포\n3. 공통: OpenAI 사이트에서 카드가 정상 등록되어 과금 가능한 상태인지(결제 정보) 확인하세요.` 
+      }]);
     }
     
     setIsLoading(false);
