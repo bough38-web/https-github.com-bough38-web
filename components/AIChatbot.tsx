@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 export default function AIChatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [messages, setMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -75,55 +75,45 @@ export default function AIChatbot() {
 
       {isOpen && (
         <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-          background: 'rgba(0, 0, 0, 0.6)', zIndex: 10000,
-          display: 'flex', justifyContent: 'center', alignItems: 'center'
-        }} onClick={() => setIsOpen(false)}>
+          position: 'fixed', bottom: 100, right: 30, width: '350px', height: '500px',
+          background: 'var(--color-surface)', border: '1px solid var(--color-border)',
+          borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+          display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 10000
+        }}>
+          <div style={{ background: '#0f172a', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ margin: 0, fontSize: '1.1rem' }}>🤖 AI 리텐션 코치</h3>
+            <button onClick={() => setIsOpen(false)} style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>✕</button>
+          </div>
           
-          <div 
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: '90%', maxWidth: '450px', height: '80vh', maxHeight: '700px',
-              background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-              borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-              display: 'flex', flexDirection: 'column', overflow: 'hidden'
-            }}
-          >
-            <div style={{ background: '#0f172a', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, fontSize: '1.1rem' }}>🤖 AI 리텐션 코치</h3>
-              <button onClick={() => setIsOpen(false)} style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '1.2rem' }}>✕</button>
-            </div>
-            
-            <div style={{ flex: 1, padding: 15, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {messages.map((m, i) => (
-                <div key={i} style={{ 
-                  alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
-                  background: m.role === 'user' ? '#2563eb' : 'var(--color-surface-hover)',
-                  color: m.role === 'user' ? '#fff' : 'var(--color-text-main)',
-                  padding: '10px 14px', borderRadius: 12, maxWidth: '85%',
-                  whiteSpace: 'pre-wrap', fontSize: '0.95rem', lineHeight: 1.5
-                }}>
-                  {m.content}
-                </div>
-              ))}
-              {isLoading && (
-                <div style={{ alignSelf: 'flex-start', background: 'var(--color-surface-hover)', padding: '10px 14px', borderRadius: 12, fontSize: '0.9rem' }}>
-                  AI가 답변을 생성중입니다... 💭
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
+          <div style={{ flex: 1, padding: 15, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {messages.map((m, i) => (
+              <div key={i} style={{ 
+                alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+                background: m.role === 'user' ? '#2563eb' : 'var(--color-surface-hover)',
+                color: m.role === 'user' ? '#fff' : 'var(--color-text-main)',
+                padding: '10px 14px', borderRadius: 12, maxWidth: '85%',
+                whiteSpace: 'pre-wrap', fontSize: '0.95rem', lineHeight: 1.5
+              }}>
+                {m.content}
+              </div>
+            ))}
+            {isLoading && (
+              <div style={{ alignSelf: 'flex-start', background: 'var(--color-surface-hover)', padding: '10px 14px', borderRadius: 12, fontSize: '0.9rem' }}>
+                AI가 답변을 생성중입니다... 💭
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
 
-            <div style={{ padding: 15, borderTop: '1px solid var(--color-border)', display: 'flex', gap: 8, background: 'var(--color-surface)' }}>
-              <input 
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleSend()}
-                placeholder="상황이나 질문을 입력하세요..."
-                style={{ flex: 1, padding: '12px 14px', borderRadius: 8, border: '1px solid var(--color-border)', fontSize: '0.95rem' }}
-              />
-              <button onClick={handleSend} className="btn-primary" style={{ padding: '0 20px', background: '#2563eb', fontWeight: 'bold' }}>전송</button>
-            </div>
+          <div style={{ padding: 15, borderTop: '1px solid var(--color-border)', display: 'flex', gap: 8, background: 'var(--color-surface)' }}>
+            <input 
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSend()}
+              placeholder="상황이나 질문을 입력하세요..."
+              style={{ flex: 1, padding: '12px 14px', borderRadius: 8, border: '1px solid var(--color-border)', fontSize: '0.95rem' }}
+            />
+            <button onClick={handleSend} className="btn-primary" style={{ padding: '0 20px', background: '#2563eb', fontWeight: 'bold' }}>전송</button>
           </div>
         </div>
       )}
