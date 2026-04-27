@@ -4,14 +4,16 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [position, setPosition] = useState({ x: -1, y: 20 }); // -1 for initial right-aligned
-  const [buttonPosition, setButtonPosition] = useState({ x: -1, y: 400 }); // "전문가 Top 10" 근처 우측
+  const [position, setPosition] = useState({ x: -1, y: -1 }); // -1 for initial
+  const [buttonPosition, setButtonPosition] = useState({ x: -1, y: -1 }); // -1 for initial
   const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, initialX: 0, initialY: 0 });
   const buttonDragRef = useRef({ isDragging: false, startX: 0, startY: 0, initialX: 0, initialY: 0, hasMoved: false });
   const [messages, setMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatWindowRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -29,7 +31,7 @@ export default function AIChatbot() {
       if (buttonDragRef.current.isDragging) {
         const dx = e.clientX - buttonDragRef.current.startX;
         const dy = e.clientY - buttonDragRef.current.startY;
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
           buttonDragRef.current.hasMoved = true;
         }
         setButtonPosition({
@@ -100,35 +102,30 @@ export default function AIChatbot() {
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (!chatWindowRef.current) return;
+    const rect = chatWindowRef.current.getBoundingClientRect();
     dragRef.current = {
       isDragging: true,
       startX: e.clientX,
       startY: e.clientY,
-      initialX: position.x === -1 ? window.innerWidth - 380 : position.x,
-      initialY: position.y
+      initialX: rect.left,
+      initialY: rect.top
     };
+    setPosition({ x: rect.left, y: rect.top });
   };
 
   const handleButtonMouseDown = (e: React.MouseEvent) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
     buttonDragRef.current = {
       isDragging: true,
       startX: e.clientX,
       startY: e.clientY,
-      initialX: buttonPosition.x === -1 ? window.innerWidth - 90 : buttonPosition.x,
-      initialY: buttonPosition.y,
+      initialX: rect.left,
+      initialY: rect.top,
       hasMoved: false
     };
-  };
-
-  const handleButtonMouseDown = (e: React.MouseEvent) => {
-    buttonDragRef.current = {
-      isDragging: true,
-      startX: e.clientX,
-      startY: e.clientY,
-      initialX: buttonPosition.x === -1 ? window.innerWidth - 90 : buttonPosition.x,
-      initialY: buttonPosition.y,
-      hasMoved: false
-    };
+    setButtonPosition({ x: rect.left, y: rect.top });
   };
 
   const handleButtonMouseUp = (e: React.MouseEvent) => {
@@ -140,12 +137,14 @@ export default function AIChatbot() {
   return (
     <>
       <button 
+        ref={buttonRef}
         onMouseDown={handleButtonMouseDown}
         onMouseUp={handleButtonMouseUp}
         onClick={(e) => e.preventDefault()}
         style={{
           position: 'fixed', 
-          top: buttonPosition.y, 
+          top: buttonPosition.y !== -1 ? buttonPosition.y : undefined, 
+          bottom: buttonPosition.y === -1 ? 120 : undefined,
           left: buttonPosition.x !== -1 ? buttonPosition.x : undefined,
           right: buttonPosition.x === -1 ? 30 : undefined,
           width: 60, height: 60,
@@ -162,17 +161,20 @@ export default function AIChatbot() {
       </button>
 
       {isOpen && (
-        <div style={{
-          position: 'fixed', 
-          top: position.y, 
-          left: position.x !== -1 ? position.x : undefined,
-          right: position.x === -1 ? 30 : undefined,
-          width: '350px', height: '600px',
-          background: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(10px)', 
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-          display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 10000
-        }}>
+        <div 
+          ref={chatWindowRef}
+          style={{
+            position: 'fixed', 
+            top: position.y !== -1 ? position.y : undefined, 
+            bottom: position.y === -1 ? 100 : undefined,
+            left: position.x !== -1 ? position.x : undefined,
+            right: position.x === -1 ? 30 : undefined,
+            width: '350px', height: '600px',
+            background: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(10px)', 
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: 16, boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+            display: 'flex', flexDirection: 'column', overflow: 'hidden', zIndex: 10000
+          }}>
           <div 
             onMouseDown={handleMouseDown}
             style={{ background: 'rgba(15, 23, 42, 0.95)', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.1)', cursor: 'grab' }}
@@ -205,7 +207,11 @@ export default function AIChatbot() {
             <input 
               value={input}
               onChange={e => setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleSend()}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+                  handleSend();
+                }
+              }}
               placeholder="상황이나 질문을 입력하세요..."
               style={{ flex: 1, padding: '12px 14px', borderRadius: 8, border: '1px solid var(--color-border)', fontSize: '0.95rem' }}
             />
