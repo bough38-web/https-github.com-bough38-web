@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ x: -1, y: 20 }); // -1 for initial right-aligned
-  const [buttonPosition, setButtonPosition] = useState({ x: -1, y: 80 }); // Top 80, Right 30 to not cover theme buttons
+  const [buttonPosition, setButtonPosition] = useState({ x: -1, y: 400 }); // "전문가 Top 10" 근처 우측
   const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, initialX: 0, initialY: 0 });
   const buttonDragRef = useRef({ isDragging: false, startX: 0, startY: 0, initialX: 0, initialY: 0, hasMoved: false });
   const [messages, setMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([]);
@@ -120,13 +120,29 @@ export default function AIChatbot() {
     };
   };
 
+  const handleButtonMouseDown = (e: React.MouseEvent) => {
+    buttonDragRef.current = {
+      isDragging: true,
+      startX: e.clientX,
+      startY: e.clientY,
+      initialX: buttonPosition.x === -1 ? window.innerWidth - 90 : buttonPosition.x,
+      initialY: buttonPosition.y,
+      hasMoved: false
+    };
+  };
+
+  const handleButtonMouseUp = (e: React.MouseEvent) => {
+    if (!buttonDragRef.current.hasMoved) {
+      setIsOpen(true);
+    }
+  };
+
   return (
     <>
       <button 
-        onClick={() => {
-          if (!buttonDragRef.current.hasMoved) setIsOpen(true);
-        }}
         onMouseDown={handleButtonMouseDown}
+        onMouseUp={handleButtonMouseUp}
+        onClick={(e) => e.preventDefault()}
         style={{
           position: 'fixed', 
           top: buttonPosition.y, 
@@ -137,10 +153,10 @@ export default function AIChatbot() {
           border: 'none', boxShadow: '0 4px 15px rgba(37, 99, 235, 0.4)',
           fontSize: '28px', cursor: 'grab', zIndex: 1000,
           display: isOpen ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: buttonDragRef.current.isDragging ? 'none' : 'transform 0.2s ease, box-shadow 0.2s ease'
+          transition: buttonDragRef.current.isDragging ? 'none' : 'box-shadow 0.2s ease'
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(37, 99, 235, 0.6)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.4)'; }}
+        onMouseEnter={(e) => { if(!buttonDragRef.current.isDragging) { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(37, 99, 235, 0.6)'; } }}
+        onMouseLeave={(e) => { if(!buttonDragRef.current.isDragging) { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.4)'; } }}
       >
         💬
       </button>
