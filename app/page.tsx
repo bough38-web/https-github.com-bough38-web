@@ -6,6 +6,7 @@ import StrategyCard from '@/components/StrategyCard';
 import CustomerTypeCard from '@/components/CustomerTypeCard';
 import PolicyGuide from '@/components/PolicyGuide';
 import AIChatbot from '@/components/AIChatbot';
+import FieldMessenger from '@/components/FieldMessenger';
 import ScrollNav from '@/components/ScrollNav';
 import { ScriptItem, CustomerType, Notice } from '@/types';
 
@@ -315,6 +316,7 @@ export default function Home() {
       </section>
 
       <AIChatbot />
+      <FieldMessenger />
       <ScrollNav />
     </main>
   );
