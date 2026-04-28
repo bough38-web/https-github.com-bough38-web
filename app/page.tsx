@@ -21,6 +21,11 @@ export default function Home() {
   const [notices, setNotices] = useState<Notice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+
   useEffect(() => {
     // 테마 변경 시 HTML body에 data-theme 속성 부여
     document.documentElement.setAttribute('data-theme', theme);
@@ -148,6 +153,67 @@ export default function Home() {
           <h1>고객해지방어 Q&A</h1>
           <p>데이터를 불러오는 중입니다...</p>
         </section>
+      </main>
+    );
+  }
+
+  const handleLogin = () => {
+    if (password === '3867') {
+      setIsAuthenticated(true);
+      setErrorMsg('');
+    } else {
+      setErrorMsg('암호가 일치하지 않습니다.');
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--color-bg)' }}>
+        <div style={{ background: 'var(--color-card-bg)', border: '1px solid var(--color-border)', borderRadius: '18px', padding: '40px', boxShadow: '0 10px 28px rgba(0,0,0,.06)', maxWidth: '400px', width: '100%', textAlign: 'center' }}>
+          <h1 style={{ fontSize: '22px', marginBottom: '10px', color: 'var(--color-text-main)' }}>보안 로그인</h1>
+          <p style={{ marginBottom: '20px', fontSize: '14px', color: 'var(--color-text-muted)' }}>문서를 열람하려면 암호를 입력하세요.</p>
+          <input 
+            type="password" 
+            placeholder="암호 입력" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleLogin();
+            }}
+            style={{ 
+              padding: '12px', 
+              border: '1px solid var(--color-border)', 
+              borderRadius: '8px', 
+              width: '100%', 
+              fontSize: '16px', 
+              marginBottom: '10px', 
+              outline: 'none', 
+              boxSizing: 'border-box',
+              background: 'var(--color-bg)',
+              color: 'var(--color-text-main)'
+            }}
+          />
+          {errorMsg && <p style={{ color: '#dc2626', fontSize: '13px', marginBottom: '15px', marginTop: '0' }}>{errorMsg}</p>}
+          <button 
+            onClick={handleLogin}
+            style={{ 
+              padding: '12px', 
+              background: 'var(--color-primary)', 
+              color: 'white', 
+              border: 'none', 
+              borderRadius: '8px', 
+              width: '100%', 
+              fontSize: '16px', 
+              fontWeight: '700', 
+              cursor: 'pointer', 
+              transition: 'all 0.2s ease' 
+            }}
+            onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
+            onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+          >
+            로그인
+          </button>
+        </div>
       </main>
     );
   }
