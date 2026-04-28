@@ -27,7 +27,7 @@ export default function PolicyGuide() {
   return (
     <details className="policy-accordion">
       <summary className="policy-summary">
-        <span className="summary-title">📖 정책안내 (접기/펼치기)</span>
+        <span className="summary-title">📖 리텐션P값 승인 정책안내 (접기/펼치기)</span>
         <span className="summary-icon">▼</span>
       </summary>
       
