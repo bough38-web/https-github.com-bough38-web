@@ -22,19 +22,39 @@ export async function GET() {
   }
 }
 
+async function notifyAdmin(message: any) {
+  // 1. Email/SMS/Kakao Notification Placeholder
+  console.log(`[Notification] To Admin: New message from ${message.senderName} - "${message.content}"`);
+  
+  // Example: If using a Webhook (Slack/Discord/etc)
+  /*
+  await fetch('https://hooks.slack.com/services/YOUR/WEBHOOK/URL', {
+    method: 'POST',
+    body: JSON.stringify({ text: `[현장톡 알림] ${message.senderName}: ${message.content}` })
+  });
+  */
+
+  // Example: If using an Email Service (Nodemailer/SendGrid)
+  // await sendEmail({ to: 'admin@company.com', subject: 'New Field Message', body: message.content });
+}
+
 export async function POST(request: Request) {
   try {
     const newMessage = await request.json();
     const messages = getMessages();
     
-    // Add timestamp if not present
     if (!newMessage.timestamp) {
       newMessage.timestamp = new Date().toISOString();
     }
     
     messages.push(newMessage);
-    
     fs.writeFileSync(DATA_PATH, JSON.stringify(messages, null, 2), 'utf-8');
+
+    // Notify Admin if message is from field
+    if (newMessage.sender === 'field') {
+      await notifyAdmin(newMessage);
+    }
+
     return NextResponse.json({ success: true, message: newMessage });
   } catch (error) {
     console.error('Failed to save message:', error);

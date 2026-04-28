@@ -105,7 +105,7 @@ export default function FieldMessenger() {
         onClick={() => setIsOpen(true)}
         style={{
           position: 'fixed',
-          bottom: 30,
+          top: 30,
           left: 30,
           width: 65,
           height: 65,
@@ -139,7 +139,7 @@ export default function FieldMessenger() {
       {isOpen && (
         <div style={{
           position: 'fixed',
-          bottom: 30,
+          top: 30,
           left: 30,
           width: '380px',
           height: '600px',
@@ -150,11 +150,11 @@ export default function FieldMessenger() {
           flexDirection: 'column',
           overflow: 'hidden',
           zIndex: 10001,
-          animation: 'slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+          animation: 'slide-down 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
         }}>
           <style dangerouslySetInnerHTML={{ __html: `
-            @keyframes slide-up {
-              from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            @keyframes slide-down {
+              from { opacity: 0; transform: translateY(-30px) scale(0.95); }
               to { opacity: 1; transform: translateY(0) scale(1); }
             }
           `}} />
