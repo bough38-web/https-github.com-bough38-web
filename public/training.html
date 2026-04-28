@@ -6,8 +6,8 @@
     <title>해지방어 플랫폼 현장 교육 가이드</title>
     <style>
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-            background-color: #f1f5f9;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #f8fafc;
             color: #1e293b;
             margin: 0;
             padding: 40px 20px;
@@ -19,10 +19,10 @@
             background-color: #ffffff;
             width: 100%;
             max-width: 900px;
-            min-height: 500px;
-            margin-bottom: 40px;
+            min-height: 550px;
+            margin-bottom: 50px;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             padding: 50px 60px;
             box-sizing: border-box;
             border-top: 8px solid #2563eb;
@@ -47,8 +47,8 @@
         }
         .slide-content {
             flex-grow: 1;
-            font-size: 20px;
-            line-height: 1.6;
+            font-size: 18px;
+            line-height: 1.7;
         }
         .slide-content ul {
             padding-left: 24px;
@@ -60,15 +60,19 @@
             color: #2563eb;
             font-weight: 700;
         }
+        .highlight-red {
+            color: #e11d48;
+            font-weight: 700;
+        }
         .badge {
             display: inline-block;
             background-color: #eff6ff;
             color: #2563eb;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
         .footer {
             margin-top: auto;
@@ -76,17 +80,38 @@
             font-size: 14px;
             color: #94a3b8;
             padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
         }
         .cover-slide {
             justify-content: center;
             align-items: center;
             text-align: center;
             border-top: 8px solid #0f172a;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
         }
         .cover-slide .slide-title {
             font-size: 48px;
             color: #0f172a;
+            margin-bottom: 20px;
+        }
+        .box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 17px;
+        }
+        .box-title {
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
     </style>
 </head>
@@ -94,10 +119,10 @@
 
     <!-- Slide 1: 표지 -->
     <div class="slide cover-slide">
-        <div class="badge">현장 교육 가이드</div>
-        <h1 class="slide-title">데이터 기반 해지방어 플랫폼<br><span class="highlight">현장 활용 및 보안 가이드</span></h1>
-        <p class="slide-subtitle">영업 및 고객지원 현장 업무 효율화를 위한 시스템 활용 교육</p>
-        <div class="footer" style="text-align: center; margin-top: 60px;">
+        <div class="badge">현장 밀착형 실무 가이드</div>
+        <h1 class="slide-title">데이터 기반 해지방어 플랫폼<br><span class="highlight">100% 활용 실전 가이드</span></h1>
+        <p class="slide-subtitle">고객의 마음을 돌리는 무기, 철저한 보안과 압도적인 데이터로 승부합니다.</p>
+        <div class="footer" style="text-align: center; margin-top: 80px; border: none;">
             Data Intel PRO 운영팀
         </div>
     </div>
@@ -105,72 +130,142 @@
     <!-- Slide 2: 도입 배경 -->
     <div class="slide">
         <div class="slide-header">
-            <h2 class="slide-title">1. 시스템 개편 및 보안 강화 배경</h2>
-            <div class="slide-subtitle">소중한 사내 자산의 보호와 안전한 업무 환경 구축</div>
+            <h2 class="slide-title">1. 플랫폼 리뉴얼 및 보안 강화</h2>
+            <div class="slide-subtitle">소중한 사내 영업 자산의 보호와 안전한 업무 환경 구축</div>
         </div>
         <div class="slide-content">
+            <p>플랫폼에 축적된 <span class="highlight">해지방어 스크립트 20종, 고객 유형별 심리 분석, 타사 위약금 방어 논리</span> 등은 우리의 핵심 경쟁력입니다.</p>
             <ul>
-                <li><strong>핵심 영업 자산 보호:</strong> 플랫폼 내 등록된 <span class="highlight">해지방어 스크립트, 고객 심리 분석 데이터, 프로모션 정책</span> 등은 외부 유출 시 치명적인 사내 핵심 자산입니다.</li>
-                <li><strong>기존 환경의 한계:</strong> 링크 접속만으로 열람이 가능했던 기존 오픈 구조의 취약점을 선제적으로 개선하였습니다.</li>
-                <li><strong>보안 컴플라이언스 준수:</strong> 사내 정보보안 가이드라인을 충족하기 위한 최소한의 인증 장치가 필요했습니다.</li>
+                <li><strong>정보 유출 원천 차단:</strong> 경쟁사나 외부인에게 당사의 방어 로직이 노출되지 않도록 전면적인 보안 시스템을 도입했습니다.</li>
+                <li><strong>안전장치 마련:</strong> URL 접속만으로 열람이 가능했던 취약점을 보완하여, 인증된 담당자만 열람할 수 있도록 개선하였습니다.</li>
+                <li><strong>지속가능한 자산화:</strong> 안전한 환경이 보장되어야 현장의 리얼한 실패/성공 사례를 지속적으로 시스템에 업데이트할 수 있습니다.</li>
             </ul>
         </div>
-        <div class="footer">Slide 2 / 5</div>
+        <div class="footer">Slide 2 / 8</div>
     </div>
 
-    <!-- Slide 3: 접속 방법 안내 -->
+    <!-- Slide 3: 접속 및 보안 규정 -->
     <div class="slide">
         <div class="slide-header">
-            <h2 class="slide-title">2. 시스템 보안 로그인 방법</h2>
+            <h2 class="slide-title">2. 시스템 보안 접속 및 현장 규정</h2>
             <div class="slide-subtitle">쉽고 빠르지만, 확실한 안전장치</div>
         </div>
         <div class="slide-content">
-            <p>복잡한 사번 인증이나 가입 절차 없이, <span class="highlight">현장에 공지된 공통 보안 암호</span>를 통해 1초 만에 시스템에 접속할 수 있습니다.</p>
-            <br>
-            <ul>
-                <li><strong>Step 1:</strong> 현장 배포용 플랫폼 접속 URL (PC/모바일/태블릿) 접속</li>
-                <li><strong>Step 2:</strong> 최초 접속 시 나타나는 <span class="highlight">'보안 로그인'</span> 화면 확인</li>
-                <li><strong>Step 3:</strong> 입력창에 <span class="highlight">사전 공지된 전용 암호 4자리</span> 입력 후 [로그인] 혹은 Enter 키 터치</li>
-                <li><strong>Step 4:</strong> 올바른 암호 입력 시, 즉시 현장 활용 플랫폼 (Q&A 가이드 등) 화면으로 이동</li>
-            </ul>
+            <div class="grid-2">
+                <div>
+                    <strong>접속 프로세스</strong>
+                    <ol>
+                        <li>현장 배포용 플랫폼 URL 접속</li>
+                        <li>'보안 로그인' 화면 노출 확인</li>
+                        <li><span class="highlight">사전 공지된 전용 암호 4자리</span> 입력</li>
+                        <li>즉시 플랫폼 메인 화면으로 진입</li>
+                    </ol>
+                </div>
+                <div>
+                    <strong>⚠️ 필수 보안 준수 사항</strong>
+                    <ul>
+                        <li><span class="highlight-red">비밀번호 절대 공유 금지:</span> 협력사 직원 및 외부인 유출 엄금</li>
+                        <li>공공장소(카페, PC방) 개방형 와이파이 환경에서 열람 자제</li>
+                        <li>분기별 비밀번호 변경 시 사내 공지 확인 필수</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="box" style="margin-top:30px; text-align: center;">
+                💡 <strong>Tip:</strong> 복잡한 사번 연동 없이 4자리 패스코드만으로 현장에서 1초 만에 접근이 가능합니다!
+            </div>
         </div>
-        <div class="footer">Slide 3 / 5</div>
+        <div class="footer">Slide 3 / 8</div>
     </div>
 
-    <!-- Slide 4: 현장 보안 준수 사항 -->
+    <!-- Slide 4: 핵심 기능 1 -->
     <div class="slide">
         <div class="slide-header">
-            <h2 class="slide-title">3. 현장 보안 규정 및 주의사항</h2>
-            <div class="slide-subtitle">현장 담당자 필수 준수 규정</div>
+            <h2 class="slide-title">3. 핵심 기능 ① - 고객 심리 맞춤형 대응</h2>
+            <div class="slide-subtitle">무작정 혜택만 제시하는 방어는 실패합니다. 고객의 '진짜 속마음'을 읽으세요.</div>
         </div>
         <div class="slide-content">
+            <p>플랫폼 하단의 <span class="highlight">'고객 유형별 심리 분석'</span> 카드를 활용하면 상담의 주도권을 가져올 수 있습니다.</p>
             <ul>
-                <li><strong>비밀번호 유출 금지:</strong> 안내받은 시스템 접속 암호는 <span class="highlight">절대 외부인이나 협력사 직원에게 공유해서는 안 됩니다.</span></li>
-                <li><strong>안전한 환경 사용 권장:</strong> 공공장소(PC방, 개방형 와이파이)에서의 열람을 자제하고, 개인용 업무 단말기를 활용해 주시기 바랍니다.</li>
-                <li><strong>정기 보안 업데이트:</strong> 시스템 보안 강화를 위해 접속 암호는 주기적으로 변경될 수 있으며, 변경 시 사내 공지를 통해 사전 안내됩니다.</li>
+                <li><strong>단순 불만형:</strong> 요금이나 품질보다는 감정적 케어가 우선입니다. 공감 대화법 스크립트를 즉시 검색하세요.</li>
+                <li><strong>타사 비교형(체리피커):</strong> 경쟁사의 숨겨진 제약 조건과 당사 잔류 시의 장기적 경제 혜택을 수치로 제시하는 논리를 활용하세요.</li>
+                <li><strong>강성 해지형:</strong> 위약금 감면 요구 시 규정 내에서 제공 가능한 '히든 프로모션' 마지노선 카드를 확인하세요.</li>
             </ul>
         </div>
-        <div class="footer">Slide 4 / 5</div>
+        <div class="footer">Slide 4 / 8</div>
     </div>
 
-    <!-- Slide 5: 기대 효과 및 활용 -->
+    <!-- Slide 5: 핵심 기능 2 -->
     <div class="slide">
         <div class="slide-header">
-            <h2 class="slide-title">4. 성공적인 해지방어를 위한 시스템 100% 활용</h2>
-            <div class="slide-subtitle">보안과 실용성의 결합</div>
+            <h2 class="slide-title">4. 핵심 기능 ② - 실시간 음성 검색 (Voice Search)</h2>
+            <div class="slide-subtitle">고객과 대화 중 키보드를 칠 시간이 없다면?</div>
         </div>
         <div class="slide-content">
+            <p>대면 상담이나 통화 중 상황이 급변할 때, <span class="highlight">마이크(🎙️) 버튼</span>을 활용해 보세요.</p>
+            <div class="box">
+                <span class="box-title">🎤 활용 예시</span>
+                <p>고객: <em>"A사로 넘어가면 위약금 다 대준다고 하던데요?"</em><br>
+                직원: (마이크 아이콘 터치 후 속삭이듯) <strong>"타사 위약금 대납"</strong></p>
+                <p style="margin-top: 15px;">👉 <strong>결과:</strong> 즉시 타사 위약금 대납의 맹점(불법 보조금 환수 위험성 등)을 설명하는 방어 스크립트가 화면에 팝업됩니다.</p>
+            </div>
+        </div>
+        <div class="footer">Slide 5 / 8</div>
+    </div>
+
+    <!-- Slide 6: 핵심 기능 3 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2 class="slide-title">5. 핵심 기능 ③ - 전문가 Top 10 기법</h2>
+            <div class="slide-subtitle">상위 1% 영업 사원들의 노하우를 클릭 한 번에</div>
+        </div>
+        <div class="slide-content">
+            <p>수백 개의 데이터 중 무엇을 봐야 할지 막막할 때는 <span class="highlight">👑 전문가 Top 10 기법</span> 토글을 켜세요.</p>
             <ul>
-                <li><strong>현장 밀착형 인터페이스:</strong> 보안을 통과한 후 제공되는 데이터는 모바일과 태블릿에 완벽하게 최적화되어 있습니다.</li>
-                <li><strong>실시간 음성 검색 지원:</strong> 즉각적인 고객 응대가 필요할 때 음성 인식(마이크)을 통해 필요한 스크립트를 빠르게 찾아냅니다.</li>
-                <li><strong>전문가 Top 10 기법 활용:</strong> 로그인 직후 가장 상단에 배치되는 핵심 리텐션 전략을 먼저 숙지하여 해지율 최소화에 기여해 주십시오.</li>
+                <li><strong>성공률이 검증된 스크립트:</strong> 지난달 현장에서 가장 방어율이 높았던 10개의 핵심 스크립트만 필터링하여 보여줍니다.</li>
+                <li><strong>월별 트렌드 반영:</strong> 매월 1일, 본사에서 데이터를 분석하여 가장 효과적인 스크립트로 자동 업데이트 됩니다.</li>
+                <li><strong>신입 사원 필수 코스:</strong> 업무에 아직 익숙하지 않다면, 이 Top 10 기법만 완벽하게 숙지해도 1인분이 가능합니다.</li>
             </ul>
-            <br>
-            <p style="text-align: center; color: #2563eb; font-weight: bold; font-size: 24px; margin-top: 30px;">
-                "안전하게 보호된 데이터로, 최상의 현장 성과를 이끌어 내세요!"
+        </div>
+        <div class="footer">Slide 6 / 8</div>
+    </div>
+
+    <!-- Slide 7: 피드백 루프 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2 class="slide-title">6. 현장의 목소리가 시스템을 진화시킵니다</h2>
+            <div class="slide-subtitle">우리만의 무기를 함께 다듬어주세요</div>
+        </div>
+        <div class="slide-content">
+            <p>본 플랫폼은 완성된 책이 아닙니다. 매일 성장하는 생태계입니다.</p>
+            <ul>
+                <li><strong>피드백 버튼 활용:</strong> 화면 하단의 <span class="highlight">'💡 더 보완해주세요'</span> 버튼을 적극 활용해 주세요.</li>
+                <li><strong>신규 사례 제보:</strong> <em>"오늘 이런 핑계로 해지하려는 고객을 이렇게 설득했습니다!"</em> ➔ 현장 꿀팁을 남겨주시면 시스템 스크립트로 정식 등록됩니다.</li>
+                <li><strong>불편 사항 접수:</strong> 사용 중 오류나 필요한 추가 필터가 있다면 언제든 익명으로 건의 가능합니다.</li>
+            </ul>
+        </div>
+        <div class="footer">Slide 7 / 8</div>
+    </div>
+
+    <!-- Slide 8: 마무리 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2 class="slide-title">7. Action Item & Q&A</h2>
+            <div class="slide-subtitle">성공적인 해지방어를 향한 첫걸음</div>
+        </div>
+        <div class="slide-content">
+            <div class="box">
+                <span class="box-title">📌 오늘 즉시 실행해야 할 3가지</span>
+                <ol>
+                    <li>스마트폰/태블릿 브라우저에 접속 주소(URL) <span class="highlight">즐겨찾기(북마크) 추가</span>하기</li>
+                    <li>공지받은 <span class="highlight">보안 암호</span>를 숙지하고 최초 로그인 테스트 진행하기</li>
+                    <li>가장 자주 겪는 해지 사유 1가지를 검색해보고, 스크립트 입에 익히기</li>
+                </ol>
+            </div>
+            <p style="text-align: center; color: #64748b; font-weight: bold; font-size: 24px; margin-top: 40px;">
+                "고객의 이탈은 막고, 우리의 자산은 안전하게 지키겠습니다."<br>수고하셨습니다.
             </p>
         </div>
-        <div class="footer">Slide 5 / 5</div>
+        <div class="footer">Slide 8 / 8</div>
     </div>
 
 </body>
