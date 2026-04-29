@@ -247,16 +247,17 @@ export default function Home() {
           고객 해지 요청을 받았을 때 바로 활용할 수 있는 리텐션 전략, 현장 스크립트,
           고객 유형별 심리 분석을 제공합니다. (모바일, 태블릿 완벽 지원)
         </p>
-        {/* 임시 숨김 처리: 해지율 분석 통계 및 제안서 버튼
-        <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', gap: '12px' }}>
+        <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
           <Link href="/analysis" className="btn-primary" style={{ background: 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: '8px' }}>
             📊 실시간 해지율 분석 통계
           </Link>
           <Link href="/report" className="btn-primary" style={{ background: '#475569', display: 'flex', alignItems: 'center', gap: '8px' }}>
             📄 도입 제안서 보기
           </Link>
+          <a href="/oss-report/index.html" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ background: '#059669', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+            📈 OSS 실적집계 가이드
+          </a>
         </div>
-        */}
       </section>
 
       <section className="toolbar">

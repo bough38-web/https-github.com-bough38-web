@@ -13,11 +13,13 @@ git checkout --orphan gh-pages
 # 모든 파일 Git에서 추적 해제 (삭제)
 git rm -rf .
 
-# main 브랜치에서 교육용 자료만 가져오기
+# main 브랜치에서 교육용 자료 및 OSS 리포트 가져오기
 git checkout main -- public/training.html
+git checkout main -- public/oss-report
 
 # 경로 이동 (루트 디렉토리로)
 mv public/training.html ./index.html
+mv public/oss-report ./oss-report
 rm -rf public
 
 # 커밋 및 푸시
