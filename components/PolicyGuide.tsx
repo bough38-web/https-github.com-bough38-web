@@ -27,12 +27,17 @@ export default function PolicyGuide() {
   return (
     <details className="policy-accordion">
       <summary className="policy-summary">
-        <span className="summary-title">📖 리텐션P값 승인 정책안내 (접기/펼치기)</span>
+        <span className="summary-title">📖 2026년 리텐션P값 승인 정책안내 (접기/펼치기)</span>
         <span className="summary-icon">▼</span>
       </summary>
       
       <div className="policy-content">
-        <h2>해지방어 P값 사용 및 승인 기준</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
+          <h2 style={{ margin: 0 }}>해지방어 P값 사용 및 승인 기준</h2>
+          <a href="/oss-report/index.html" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ background: '#059669', fontSize: '13px', padding: '8px 16px', textDecoration: 'none' }}>
+            📈 OSS 실적집계 가이드 바로가기
+          </a>
+        </div>
 
         <div className="desc-box">
           <strong>■ 대상:</strong> 
